@@ -1,21 +1,21 @@
 module Enumerable
   def my_each
-    return Enumerator.new(self) unless block_given?
+    return self.to_enum unless block_given?
 
-    for i in 0...length
+    for i in 0...self.length
       yield to_a[i]
     end
   end
 
   def my_each_with_index
-    return Enumerator.new(self) unless block_given?
+    return self.to_enum unless block_given?
 
     for i in 0...self.length
       yield to_a[i], i
     end
   end
   def my_select
-    return Enumerator.new(self) unless block_given?
+    return self._enum unless block_given?
 
     selected_el = Array.new
     my_each { |sel| selected_el << sel if yield sel }
