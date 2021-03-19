@@ -38,3 +38,5 @@ p array.my_select { |n| n > 1}
 p friends.my_select { |f| f != 'Felon'}
 
 p words.my_select { |w, s| s == 'string1' }
+
+
