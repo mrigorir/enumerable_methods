@@ -114,11 +114,37 @@ module Enumerable
     end 
   end
 
-
+  def my_map
+    return self.to_enum unless block_given?
+    new_array = []
+    my_each { |el| new_array << yield(el) }
+    new_array
+  end
+  def my_inject(*args)
+    if block_given?
+      arr = self.to_a
+      result = arr[0]
+      n = arr[1]
+      i = 0
+      while i < arr.size - 1
+        result = yield(result, n)
+        n = arr[i + 2]
+        i += 1
+      end
+      result
+    end
+  end
 end
 
 
-ary = [1, 2, 4, 2]
-p ary.my_count              #=> 4
-p ary.count(2)                #=> 2
-p ary.count{ |x| x % 2 == 0 } #=> 3
+
+# Same using a block and inject
+p (5..10).my_inject { |sum, n| sum + n }            #=> 45
+
+# Same using a block
+p (5..10).my_inject(1) { |product, n| product * n } #=> 151200
+ #find the longest word
+longest = %w{ cat sheep bear }.my_inject do |memo, word|
+   memo.length > word.length ? memo : word
+end
+p longest                                        #=> "sheep"
