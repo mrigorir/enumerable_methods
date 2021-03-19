@@ -100,15 +100,25 @@ module Enumerable
     end
   end
 
+  def my_count(*args)
+    count = 0
+    if block_given?
+      my_each { |el| count += 1 if yield(el) == true }
+      return count
+    elsif args.size > 0
+      my_each { |el| count += 1 if el == args[0] }
+      return count
+    else
+      my_each { |n| count += 1 }
+      count
+    end 
+  end
 
 
 end
 
-p %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
-p %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
-p %w{ant bear cat}.my_none?(/d/)                        #=> true
-p [1, 3.14, 42].my_none?(Float)                         #=> false
-p [].my_none?                                           #=> true
-p [nil].my_none?                                        #=> true
-p [nil, false].my_none?                                 #=> true
-p [nil, false, true].my_none?                           #=> false
+
+ary = [1, 2, 4, 2]
+p ary.my_count              #=> 4
+p ary.count(2)                #=> 2
+p ary.count{ |x| x % 2 == 0 } #=> 3
