@@ -1,143 +1,119 @@
 module Enumerable
   def my_each
-    return self.to_enum unless block_given?
+    return to_enum unless block_given?
 
-    for i in 0...self.length
+    for i in 0...length
       yield to_a[i]
     end
     self
   end
 
   def my_each_with_index
-    return self.to_enum unless block_given?
+    return to_enum unless block_given?
 
-    for i in 0...self.length
+    for i in 0...length
       yield to_a[i], i
     end
     self
   end
 
   def my_select
-    return self.to_enum unless block_given?
+    return to_enum unless block_given?
 
-    selected_el = Array.new
+    selected_el = []
     my_each { |sel| selected_el << sel if yield sel }
     selected_el
   end
 
   def my_all?(*args)
+    check = true
     if block_given?
-      check = true
       my_each { |el| check = false if yield(el) == false }
-      return check
-    elsif args.size > 0 # have argument - for matching
-      check = true
+    elsif args.size.positive? # have argument - for matching
       if args[0].class == Regexp
-        my_each { |el| check = false unless el === args[0] }
-        return check
+        my_each { |el| check = false unless el.match(args[0]) }
       else
         my_each { |el| check = false unless [el.class, el.class.superclass].include?(args[0]) }
-        return check
-      end 
-    else
-      check = true
-      my_each do |el| 
-        check = false if el == nil || el == false 
       end
-      check
+    else
+      my_each { |el| check = false if [nil, false].include?(el) }
     end
+    check
   end
 
   def my_any?(*args)
+    check = false
     if block_given?
-      check = false
       my_each { |el| check = true if yield(el) == true }
-      return check
-    elsif args.size > 0 # have argument - for matching
-      check = false
+    elsif args.size.positive? # have argument - for matching
       if args[0].class == Regexp
-        my_each { |el| check = true if el === args[0] }
-        return check
+        my_each { |el| check = true if el.match(args[0]) }
       else
         my_each { |el| check = true if [el.class, el.class.superclass].include?(args[0]) }
-        return check
-      end 
+      end
     else
       check = 0
       my_each { |el| check += 1 if el == true }
-      check > 0 ? true : false
+      return true if check.positive?
+
+      return false
     end
+    check
   end
 
   def my_none?(*args)
     count = 0
     if block_given?
       my_each { |el| count += 1 if yield(el) == false }
-      if count == self.size
-        return true
-      else
-        return false
-      end
-    elsif args.size > 0 # have argument - for matching
+    elsif args.size.positive? # have argument - for matching
       if args[0].class == Regexp
-        my_each { |el| count += 1 unless el === args[0] }
-        if count == self.size
-          return true
-        else
-          return false
-        end
+        my_each { |el| count += 1 unless el.match(args[0]) }
       else
         my_each { |el| count += 1 unless [el.class, el.class.superclass].include?(args[0]) }
-        if count == self.size
-          return true
-        else
-          return false
-        end
-      end 
+      end
     else
-      my_each { |el| count += 1 if el == false || el == nil }
-      count == self.size ? true : false
+      my_each { |el| count += 1 if [nil, false].include?(el) }
     end
+    return true if count == size
+
+    false
   end
 
   def my_count(*args)
     count = 0
     if block_given?
       my_each { |el| count += 1 if yield(el) == true }
-      return count
-    elsif args.size > 0
+    elsif args.size.positive?
       my_each { |el| count += 1 if el == args[0] }
-      return count
     else
-      my_each { |n| count += 1 }
-      count
-    end 
+      count = size
+    end
+    count
   end
 
   def my_map
-    return self.to_enum unless block_given?
+    return to_enum unless block_given?
+
     new_array = []
     my_each { |el| new_array << yield(el) }
     new_array
   end
-  def my_inject(*args)
-    if block_given?
-      arr = self.to_a
-      result = arr[0]
-      n = arr[1]
-      i = 0
-      while i < arr.size - 1
-        result = yield(result, n)
-        n = arr[i + 2]
-        i += 1
-      end
-      result
+
+  def my_inject
+    arr = to_a
+    result = arr[0]
+    n = arr[1]
+    i = 0
+    while i < arr.size - 1
+      result = yield(result, n)
+      n = arr[i + 2]
+      i += 1
     end
+    result
   end
 end
 
-
-
+=begin
 # Same using a block and inject
 p (5..10).my_inject { |sum, n| sum + n }            #=> 45
 
@@ -148,3 +124,4 @@ longest = %w{ cat sheep bear }.my_inject do |memo, word|
    memo.length > word.length ? memo : word
 end
 p longest                                        #=> "sheep"
+=end
