@@ -121,11 +121,11 @@ module Enumerable
     new_array
   end
   def my_inject(*args)
+    arr = self.to_a
+    result = arr[0]
+    n = arr[1]
+    i = 0
     if block_given?
-      arr = self.to_a
-      result = arr[0]
-      n = arr[1]
-      i = 0
       while i < arr.size - 1
         result = yield(result, n)
         n = arr[i + 2]
