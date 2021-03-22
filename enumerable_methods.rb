@@ -36,7 +36,7 @@ module Enumerable
     if block_given?
       my_each { |el| check = false if yield(el) == false }
     elsif args.size.positive? # have argument - for matching
-      if args[0].class == Regexp
+      if args[0].instance_of?(Regexp)
         my_each { |el| check = false unless el.match(args[0]) }
       else
         my_each { |el| check = false unless [el.class, el.class.superclass].include?(args[0]) }
@@ -52,7 +52,7 @@ module Enumerable
     if block_given?
       my_each { |el| check = true if yield(el) == true }
     elsif args.size.positive? # have argument - for matching
-      if args[0].class == Regexp
+      if args[0].instance_of?(Regexp)
         my_each { |el| check = true if el.match(args[0]) }
       else
         my_each { |el| check = true if [el.class, el.class.superclass].include?(args[0]) }
@@ -72,7 +72,7 @@ module Enumerable
     if block_given?
       my_each { |el| count += 1 if yield(el) == false }
     elsif args.size.positive? # have argument - for matching
-      if args[0].class == Regexp
+      if args[0].instance_of?(Regexp)
         my_each { |el| count += 1 unless el.match(args[0]) }
       else
         my_each { |el| count += 1 unless [el.class, el.class.superclass].include?(args[0]) }
