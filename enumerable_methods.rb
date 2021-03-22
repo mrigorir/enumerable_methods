@@ -91,11 +91,11 @@ module Enumerable
     count
   end
 
-  def my_map
+  def my_map(&blk)
     return to_enum unless block_given?
 
     new_array = []
-    my_each { |el| new_array << yield(el) }
+    my_each { |el| new_array << blk.call(el) }
     new_array
   end
 
