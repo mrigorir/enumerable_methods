@@ -34,6 +34,17 @@ Need Ruby 1.9+ installed
 
 `ruby bubble_sort.rb`
 
+### Run tests
+
+To run tests, go to the root folder and run: 
+
+`rspec`
+
+You will see all of the test either passing or failing.
+
+Run them and see the results.
+
+
 ## Authors
 
 👤 **Arthur Borges**
