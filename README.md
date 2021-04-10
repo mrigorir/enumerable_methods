@@ -42,7 +42,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Setup
 
-Setup by  following the installation instructions below :\
+Setup by  following the installation instructions below
 
 * Open your terminal and look for the folder you want to work with
 
