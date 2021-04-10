@@ -1,4 +1,4 @@
-require './lib/enumerable_methods'
+require_relative '../lib/enumerable_methods'
 
 describe Enumerable do
   let(:array) { %w[apple Orange Watermelon Banana] }
@@ -32,6 +32,14 @@ describe Enumerable do
 
     it 'does not return a transformed array' do
       expect(number_array.my_each { |n| n * 2 }).not_to eq([2, 4, 6, 8])
+    end
+
+    it 'returns an Enumerator if no block is passed for Array' do
+      expect(array.my_each).to be_a(Enumerator)
+    end
+
+    it 'returns an Enumerator if no block is passed for Hash' do
+      expect(hash.my_each).to be_a(Enumerator)
     end
   end
 
@@ -104,6 +112,18 @@ describe Enumerable do
       new_array = test_array.my_select { |n| n * 2 }
       expect(new_array).to eq(test_array)
     end
+
+    it 'returns only an array with the multiple of 3 numbers in the Range' do
+      expect((1..10).my_select { |i| i % 3 == 0 }).to eql([3, 6, 9])
+    end
+
+    it 'returns only an array as indicated' do
+      expect(%i[foo bar].my_select { |x| x == :foo }).to eql([:foo])
+    end
+
+    it 'returns an enumerator when a block is not passed' do
+      expect((1..10).my_select).to be_a(Enumerator)
+    end
   end
 
   describe '#my_any?' do
@@ -148,6 +168,14 @@ describe Enumerable do
     it 'returns false if there\'s at least, a true boolean' do
       expect(true_array.my_none?).to be false
     end
+
+    it 'returns false as at least one element have 4 or more letters' do
+      expect(animal_array.my_none? { |word| word.length >= 4 }).to eql(false)
+    end
+
+    it 'returns false when there is and false otherwise' do
+      expect(true_array.my_none?).to eql(false)
+    end
   end
 
   describe '#my_count' do
@@ -185,33 +213,37 @@ describe Enumerable do
       expect(array).not_to eq(new_array)
     end
 
-    describe '#my_inject' do
-      it 'returns the outcome of summing many elements' do
-        expect(range.my_inject(:+)).to eql(45)
-      end
+    it 'returns an Enumerator when none block is given' do
+      expect(range.my_map).to be_a(Enumerator)
+    end
+  end
 
-      it 'sums all of the elements using a block' do
-        expect(range2.my_inject { |sum, n| sum + n }).to eql(120)
-      end
-
-      it 'multiply all elements and returns the outcome' do
-        expect(range.my_inject(1, :*)).to eql(151_200)
-      end
-
-      it 'returns the outcome of all multiplied elements using a block' do
-        expect(range.my_inject(1) { |el, n| el * n }).to eql(151_200)
-      end
-
-      it 'returns the longest word' do
-        longest = array.my_inject { |memo, word| memo.length > word.length ? memo : word }
-        expect(longest).to eql('Watermelon')
-      end
+  describe '#my_inject' do
+    it 'returns the outcome of summing many elements' do
+      expect(range.my_inject(:+)).to eql(45)
     end
 
-    describe '#multiply_els' do
-      it 'multiplies all the elements of the array' do
-        expect(number_array.my_inject { |el, n| el * n }).to eql(24)
-      end
+    it 'sums all of the elements using a block' do
+      expect(range2.my_inject { |sum, n| sum + n }).to eql(120)
+    end
+
+    it 'multiply all elements and returns the outcome' do
+      expect(range.my_inject(1, :*)).to eql(151_200)
+    end
+
+    it 'returns the outcome of all multiplied elements using a block' do
+      expect(range.my_inject(1) { |el, n| el * n }).to eql(151_200)
+    end
+
+    it 'returns the longest word' do
+      longest = array.my_inject { |memo, word| memo.length > word.length ? memo : word }
+      expect(longest).to eql('Watermelon')
+    end
+  end
+
+  describe '#multiply_els' do
+    it 'multiplies all the elements of the array' do
+      expect(number_array.my_inject { |el, n| el * n }).to eql(24)
     end
   end
 end

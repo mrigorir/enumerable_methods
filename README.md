@@ -1,48 +1,65 @@
-![](https://img.shields.io/badge/Microverse-blueviolet)
+#![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Rebuild of enumerable methods done in Ruby
+## Testing enumerable_methods
 
-> In this project we learned how to create existing enumerable methods in Ruby and how to use Git Flow.
+>OFor the completion of this project, I have added tests to make sure that all the logic methods works properly and give the correct outcome, testing both positive and negative outcomes to be sure it's working as intended.
+
 
 
 ## Built With
 
-- Git
-- Github
-- Git Flow
-- VSCode
-- Ruby
-- Ruby Style Guide
-- Rubocop
-- Blocks and Procs
-
+<img src="https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white">
 
 ## Getting Started
 
-To get a local copy up and running follow these simple example steps:
+To get a local copy up and running follow these simple example steps.
 
-Go to your terminal;
+## How to Test 
 
-Run `git clone git@github.com:arthurborgesdev/enumerable_methods.git`
+- First type `gem install rspec`
 
+- cd into this Project directory
+
+- rspec spec/enumerable_methods.rb
 
 ### Prerequisites
 
-Need Ruby 1.9+ installed
+1. VSCode
+
+2. Terminal (Bash)
+
+3. Linter tests
+
+4. Git
+
+5. Ruby
+
+### Setup
+
+Setup by  following the installation instructions below :\
+
+* Open your terminal and look for the folder you want to work with
+
+### Install
+
+Run the following command into your terminal:
+
+```console
+git clone https://github.com/tiagorahal/enumerable_methods.git
+```
 
 ### Usage
 
-`ruby bubble_sort.rb`
+Run the following command into your terminal:
 
-### Run tests
+```console
+ruby lib/enumerable_methods.rb
+```
+Run the following command into your terminal to check the Rspec testing:
 
-To run tests, go to the root folder and run: 
-
-`rspec`
-
-You will see all of the test either passing or failing.
-
-Run them and see the results.
+```console
+rspec spec/enumerable_spec.rb
+```
 
 
 ## Authors
