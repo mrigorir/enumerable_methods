@@ -2,13 +2,19 @@
 
 ## Testing enumerable_methods
 
->OFor the completion of this project, I have added tests to make sure that all the logic methods works properly and give the correct outcome, testing both positive and negative outcomes to be sure it's working as intended.
-
+>For the completion of this project, I have added tests to make sure that all the logic methods works properly and give the correct outcome, testing both positive and negative outcomes to be sure it's working as intended.
 
 
 ## Built With
 
-<img src="https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white">
+- Git
+- Github
+- Git Flow
+- VSCode
+- Ruby
+- Ruby Style Guide
+- Rubocop
+- Blocks and Procs
 
 ## Getting Started
 
@@ -45,7 +51,7 @@ Setup by  following the installation instructions below :\
 Run the following command into your terminal:
 
 ```console
-git clone https://github.com/tiagorahal/enumerable_methods.git
+git clone https://github.com/mrigorir/enumerable_methods.git
 ```
 
 ### Usage
